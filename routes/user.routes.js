@@ -1,11 +1,18 @@
-/*var express = require('express');
+var express = require('express');
 var app = express.Router();
-var userController = require('..controllers/user.controler');
+var userController = require('../controllers/user.controller');
 
-app.get('/api/users', userController.getUsers);
-app.post('/api/user', userController.addUser);
-app.get('/api/user', userController.getUser);
-app.delete('/api/user', userController.deleteUser);
+
+
+app.get('/users', userController.getUsers);
+
+app.post('/user', userController.addUser);
+
+app.get('/user', userController.getUser);
+
+app.delete('/user', userController.deleteUser);
+
 app.put('/user/:upd_id', userController.updateUser);
 
-module.exports = app;*/
+
+module.exports = app;
