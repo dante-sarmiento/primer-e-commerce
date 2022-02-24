@@ -28,18 +28,31 @@ async function getUser(req, res){
 }
 
 async function deleteUser(req, res){
-    const userId = req.query.user_id;
+    const user_deleted = req.query.user_id;
 
-    const user = await User.findByIdAndDelete(userId);
+    const user = await User.findByIdAndDelete(user_deleted);
     console.log(user);
     
-    res.send({ userDeleted: userId });
+    res.send({ userDeleted: user_deleted });
 }
+
+async function updateUser(req, res) {
+    const id = req.params.upd_id;
+
+    const userChangesToApply = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(id, userChangesToApply, { new: true });
+    if(!updatedUser) return res.status(404).send('No se encontro el usuario');
+    
+    return res.status(200).send(updatedUser)
+}
+
 
 
 module.exports = {
     addUser,
     getUsers,
     getUser,
-    deleteUser
+    deleteUser,
+    updateUser
 }
