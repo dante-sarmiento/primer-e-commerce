@@ -14,5 +14,7 @@ app.delete('/user', userController.deleteUser);
 
 app.put('/user/:upd_id', userController.updateUser);
 
+app.post('/login', userController.login);
+
 
 module.exports = app;

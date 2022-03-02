@@ -9,9 +9,9 @@ var rolesValidos = [
 
 var UserSchema = new Schema({
     fullName: { type: String, required: true, maxlength: 40 },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true, maxlength: 40 },
     phone: { type: String, maxlength: 14 },
-    password: { type: String },
+    password: { type: String, required: true },
     adress: {
         street: { type: String },
         steet_numer: { type: Number },
