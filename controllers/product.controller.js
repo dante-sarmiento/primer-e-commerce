@@ -15,6 +15,12 @@ async function addProduct(req, res) {
         res.status(404).send(error)
     }
 };
+/*async function getProducts(req, res){
+    const productosDB = await Product.find();
+    res.send({
+        products: productosDB
+    })
+}*/
 
 async function getProducts(req, res) {
     // Cantidad de items por página, acá usamos un operador ternario (if/else) en el que vemos si viene como query param la cantidad deseada por el usuario y sino seteamos un valor por defecto en este caso 3
@@ -23,7 +29,6 @@ async function getProducts(req, res) {
     // Si el valor de req.query.page no viene (undefined) arranca desde el valor 0, ahora si viene un valor y tomando como referencia los indices de array, la segunda página (index 1 en un array "segundo elemento") al multiplicar 1* 5 = 5 entonces salteo los primero elementos.
     const itemsToSkip = req.query.page * 5;
 
-    // const searchParams = req.query;
     const searchParams = req.query.name ? 
         {name: 
             { '$regex': req.query.name, 
@@ -37,14 +42,14 @@ async function getProducts(req, res) {
         // const productsTotal = result[1]
     const [ productosDB, productsTotal ] = await Promise.all([
         Product.find(searchParams)
-        .populate('clientId')
+        //.populate('clientId')
         // para ordenar basados en alguna propiedad si color el nombre y el valor 1 (ordenamiento ascendente) y -1 (ordenamiento descendente)
         .sort({ name: -1 })
         // skip: Cantidad de documentos que voy a saltear en la búsqueda (a partir del cuál voy a buscar)
         .skip(itemsToSkip)
         // limit: Limite de elementos que voy a traer de la DB por consulta
         .limit(itemsPerPage),
-         Product.countDocuments(searchParams)
+        Product.countDocuments(searchParams)
     ])
     // console.log(result)
 
