@@ -42,7 +42,7 @@ async function deleteUser(req, res){
     const user = await User.findByIdAndDelete(user_deleted);
     console.log(user);
     
-    res.send({ userDeleted: user_deleted });
+    res.send({ userDeleted: user });
 }
 
 async function updateUser(req, res) {
@@ -62,7 +62,7 @@ async function login (req, res){
         const password = req.body.password;
 
         const userDB = await User.findOne({ email: req.body.email });
-        if(!useDB) return res.status(404).send({ msg:'El suario no existe en nuestra BD' });
+        if(!userDB) return res.status(404).send({ msg:'El suario no existe en nuestra BD' });
 
         const isValidPassword = await bcrypt.compare(password, userDB.password);
         if(!isValidPassword) return res.status(401).send({ msg:'Alguno de os datos ingresados no es correcto' });
