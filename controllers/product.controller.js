@@ -15,12 +15,6 @@ async function addProduct(req, res) {
         res.status(404).send(error)
     }
 };
-/*async function getProducts(req, res){
-    const productosDB = await Product.find();
-    res.send({
-        products: productosDB
-    })
-}*/
 
 async function getProducts(req, res) {
     // Cantidad de items por página, acá usamos un operador ternario (if/else) en el que vemos si viene como query param la cantidad deseada por el usuario y sino seteamos un valor por defecto en este caso 3
@@ -42,8 +36,8 @@ async function getProducts(req, res) {
         // const productsTotal = result[1]
     const [ productosDB, productsTotal ] = await Promise.all([
         Product.find(searchParams)
-        //.populate('clientId')
-        // para ordenar basados en alguna propiedad si color el nombre y el valor 1 (ordenamiento ascendente) y -1 (ordenamiento descendente)
+        .populate('clientId')
+        // para ordenar basados en alguna propiedad si coloco el nombre y el valor 1 (ordenamiento ascendente) y -1 (ordenamiento descendente)
         .sort({ name: -1 })
         // skip: Cantidad de documentos que voy a saltear en la búsqueda (a partir del cuál voy a buscar)
         .skip(itemsToSkip)
